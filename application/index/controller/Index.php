@@ -2,7 +2,7 @@
 
 namespace app\index\controller;
 
-class Index extends \think\Controller {
+class Index extends Base {
 
     public function index() {
         return $this->fetch('index');
@@ -11,9 +11,10 @@ class Index extends \think\Controller {
      * 测试sqlite
      */
     public function testSqlite(){
-       $result= \think\Db::table('history')
+       $result= \think\Db::table('user')
                 ->find();
         var_dump($result);
+        $this->json('1',1,1);
     }
 
 }
