@@ -9,6 +9,15 @@ namespace app\index\controller;
 class Base extends \think\Controller {
 
     /**
+     * 获取请求ip
+     * @return type
+     */
+    public static function getUserIp() {
+        $r = new \think\Controller();
+        return $r->request->ip();
+    }
+
+    /**
      * guid 获取
      * @return type
      */

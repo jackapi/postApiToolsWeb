@@ -14,7 +14,12 @@ class Register extends Base {
 
     public function ajaxIndex() {
         if ($this->request->isPost()) {
-            
+            $user = new \app\index\model\user($this->request->post('', '', ['strip_tags', 'htmlspecialchars']));
+            if ($user->register()) {
+                $this->json('注册用户成功');
+            } else {
+                $this->json('注册用户失败:' . $user->error);
+            }
         }
         $this->json('请求错误');
     }
