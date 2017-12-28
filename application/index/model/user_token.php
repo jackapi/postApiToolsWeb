@@ -23,6 +23,8 @@ class user_token extends Model {
             'token' => $token,
             'add_time' => time(),
             'end_time' => time() + ( 24 * 3600 * 30),
+            'login_ip' => \app\index\controller\Base::getUserIp(),
+            'code' => \app\index\controller\Base::guid(),
         ];
         return $userToken->save($data);
     }
