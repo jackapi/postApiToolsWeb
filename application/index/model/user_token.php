@@ -9,6 +9,7 @@ class user_token extends Model {
     protected $field = true; //过滤不存在的字段
     protected $table = 'user_token';
     public $error = "";
+    public $token = "";
 
     /**
      * 创建登录token
@@ -26,6 +27,7 @@ class user_token extends Model {
             'login_ip' => \app\index\controller\Base::getUserIp(),
             'code' => \app\index\controller\Base::guid(),
         ];
+        $this->token = $token;
         return $userToken->save($data);
     }
 

@@ -10,6 +10,7 @@ class user extends Model {
     protected $table = 'user';
     protected $insert = ['hash', 'addtime'];
     public $error = "";
+    public $token = "";
 
     protected function setHashAttr() {
         return \app\index\controller\Base::guid();
@@ -55,6 +56,7 @@ class user extends Model {
             }
             $userToken = new user_token();
             $userToken->addToken($user['hash']);
+            $this->token = $userToken->token;
             return $user;
         }
         $this->error = "用户不存在";

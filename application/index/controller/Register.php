@@ -28,13 +28,17 @@ class Register extends Base {
         $this->json('请求错误');
     }
 
+    /**
+     * 用户登录接口
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
     public function ajaxLoginToken() {
         if ($this->request->isPost()) {
             $user = new \app\index\model\user($this->request->post('', '', ['strip_tags', 'htmlspecialchars']));
             $result = $user->login();
             if ($result) {
                 session('userData', $result);
-                $this->json('用户登录成功');
+                $this->json('用户登录成功', 1, ['token' => $user->token]);
             } else {
                 $this->json('用户登录失败:' . $user->error);
             }
