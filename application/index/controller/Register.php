@@ -46,4 +46,20 @@ class Register extends Base {
         $this->json('请求错误');
     }
 
+    /**
+     * 判断是否为登录状态
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
+    public function isLogin() {
+        if (!$this->request->isPost()) {
+            $this->json('请求出错');
+        }
+        $register = new \app\index\model\user($this->request->isPost());
+        if ($register->isLogin()) {
+            $this->json('已登录', 1);
+        } else {
+            $this->json('未登录');
+        }
+    }
+
 }

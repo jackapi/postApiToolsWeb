@@ -22,9 +22,14 @@ class user extends Model {
 
     /**
      * 用户注册
+     * @author chenran(apizl) <apiziliao@gmail.com>
      * @return boolean
      */
     public function register() {
+        if (empty($this->data['name'])) {
+            $this->error = "用户名不能为空";
+            return false;
+        }
         $user = user::get(['name' => $this->data['name']]);
         if ($user) {
             $this->error = "当前用户名已被注册";
@@ -42,9 +47,18 @@ class user extends Model {
 
     /**
      * 登录操作
+     * @author chenran(apizl) <apiziliao@gmail.com>
      * @return boolean
      */
     public function login() {
+        if (empty($this->data['name'])) {
+            $this->error = "用户名不能为空";
+            return false;
+        }
+        if (empty($this->data['password'])) {
+            $this->error = "密码不能为空";
+            return false;
+        }
         $user = user::get(['name' => $this->data['name']]);
         if ($user) {
             $user = $user->toArray();
@@ -61,6 +75,27 @@ class user extends Model {
         }
         $this->error = "用户不存在";
         return false;
+    }
+
+    /**
+     * 判断是否登录
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     * @return boolean
+     */
+    public function isLogin() {
+        if (empty($this->data['token'])) {
+            $this->error = "请重新登录";
+            return false;
+        }
+        $result = \think\Db::table("user_token as ut")
+                ->field('ut.token,u.name')
+                ->join("user as u", 'u.hash=uk.uid')
+                ->find();
+        if ($result) {
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }
