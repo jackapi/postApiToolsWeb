@@ -60,10 +60,13 @@ class Document extends UserBase {
      */
     public function createDocument() {
         if ($this->request->isPost()) {
-            $projectHash = $this->request->post('project_hash');
-            $project = new \app\index\model\project();
+            $projectHash = $this->request->post('project_hash', '');
+            if (empty($projectHash)) {
+                $this->json('文档栏目不正确');
+            }
+            $project = new \app\index\model\project($this->request->post());
             if ($project->addProject($this->userData->hash, $projectHash)) {
-                $this->json('添加成功');
+                $this->json('添加成功', 1, $project->resultHash);
             } else {
                 $this->json('添加失败:' . $project->getError());
             }
