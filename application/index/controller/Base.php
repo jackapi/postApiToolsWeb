@@ -9,6 +9,41 @@ namespace app\index\controller;
 class Base extends \think\Controller {
 
     /**
+     * 去除包含字段
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     * @param type $array
+     * @param type $arrayUnset
+     * @param type $isList
+     * @return type
+     */
+    public function arrayFiledUnset($array, $arrayUnset, $isList = true) {
+        if (!$isList) { //非数组
+            for ($i = 0; $i < count($arrayUnset); $i++) {
+                if (!empty($array[$arrayUnset[$i]])) {
+                    unset($array[$arrayUnset[$i]]);
+                }
+            }
+            return $array;
+        }
+        for ($i = 0; $i < count($array); $i++) {
+            for ($g = 0; $g < count($arrayUnset); $g++) {
+                if (!empty($array[$i][$arrayUnset[$g]])) {
+                    unset($array[$i][$arrayUnset[$g]]);
+                }
+            }
+        }
+        return $array;
+    }
+
+    /**
+     * 返回统一错误名称
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
+    public function sendIsPostError() {
+        $this->json('请求出错');
+    }
+
+    /**
      * 获取请求ip
      * @return type
      */

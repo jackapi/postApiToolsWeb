@@ -21,6 +21,21 @@ class user extends Model {
     }
 
     /**
+     * 判断用户是否存在  返回对象
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     * @param type $uid
+     * @return boolean
+     */
+    public function getUserHash($uid) {
+        $result = user::get(['hash' => $uid]);
+        if (!$result) {
+            $this->error = "不存在用户";
+            return false;
+        }
+        return $result;
+    }
+
+    /**
      * 用户注册
      * @author chenran(apizl) <apiziliao@gmail.com>
      * @return boolean

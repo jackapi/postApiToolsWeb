@@ -74,4 +74,60 @@ class Document extends UserBase {
         $this->json('请求出错');
     }
 
+    /**
+     * 栏目更新
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
+    public function updateProjectAjax() {
+        
+    }
+
+    /**
+     * 更新子类Ajax
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
+    public function updateProjectPidAjax() {
+        if ($this->request->isPost()) {
+            $projectSetting = new \app\index\model\project_setting($this->request->post());
+            if ($projectSetting->addProjectPid($this->userData->hash)) {
+                $this->json('创建子类成功', 1, $projectSetting->resultHash);
+            } else {
+                $this->json('创建子类失败：' . $projectSetting->getError());
+            }
+            $this->json('创建出错');
+        }
+        $this->json('请求错误');
+    }
+
+    /**
+     * 更新文档
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
+    public function updateDocument() {
+        if ($this->request->isPost()) {
+            $projectHash = $this->request->post('project_hash', '');
+            if (empty($projectHash)) {
+                $this->json('文档栏目不正确');
+            }
+            $project = new \app\index\model\project($this->request->post());
+            if ($project->addProject($this->userData->hash, $projectHash)) {
+                $this->json('添加成功', 1, $project->resultHash);
+            } else {
+                $this->json('添加失败:' . $project->getError());
+            }
+        }
+        $this->json('请求出错');
+    }
+
+    /**
+     * 检测项目是否有更新
+     * @author chenran(apizl) <apiziliao@gmail.com>
+     */
+    public function checkProject() {
+        if (!$this->request->isPost()) {
+            $this->json('请求出错');
+        }
+        $resultHash = $this->request->post('hash', '');
+    }
+
 }
