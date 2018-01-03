@@ -29,7 +29,7 @@ class Role extends UserBase {
     }
 
     /**
-     * 获取自己创建的主项目列表
+     * 获取自己主项目列表
      * @author chenran(apizl) <apiziliao@gmail.com>
      */
     public function getProjectSettingList() {
@@ -42,7 +42,7 @@ class Role extends UserBase {
     }
 
     /**
-     * 获取自己创建主项目子类列表
+     * 获取自己主项目子类列表
      * @author chenran(apizl) <apiziliao@gmail.com>
      */
     public function getProjectSettingPidList() {
@@ -71,7 +71,7 @@ class Role extends UserBase {
         if (empty($result)) {
             $this->json('没有要显示的内容喔！');
         }
-        $result = $this->arrayFiledUnset($result, ['uid', 'role', 'role_type','desc','url','urldata','method']);
+        $result = $this->arrayFiledUnset($result, ['uid', 'role', 'role_type']);
         $this->json('ok', 1, $result);
     }
 
